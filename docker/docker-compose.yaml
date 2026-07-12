@@ -1,0 +1,90 @@
+# Copyright (c) 2026 ETH Zurich (Robotic Systems Lab)
+# All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+x-default-viserdex-environment: &default-viserdex-environment
+  - OMNI_KIT_ALLOW_ROOT=1
+
+x-default-viserdex-deploy: &default-viserdex-deploy
+  resources:
+    reservations:
+      devices:
+        - driver: nvidia
+          count: all
+          capabilities: [ gpu ]
+
+services:
+  viserdex:
+    env_file: .env.base
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      args:
+        - DOCKER_VISERDEX_EXTENSION_PATH_ARG=${DOCKER_VISERDEX_EXTENSION_PATH}
+    image: viserdex
+    container_name: viserdex
+    volumes:
+      # Project directory
+      - type: bind
+        source: ../
+        target: ${DOCKER_VISERDEX_EXTENSION_PATH}
+      # X11 socket, for the Isaac Sim GUI window (non-headless runs). Without this the container has no
+      # way to reach the host's X server even though DISPLAY is passed through and network_mode is host —
+      # DISPLAY only names the server, this is what actually lets the container talk to it. Run
+      # `xhost +local:docker` on the host once per session first (see README).
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+      - type: volume
+        source: viserdex-logs
+        target: ${DOCKER_VISERDEX_EXTENSION_PATH}/logs
+      # Isaac Sim cache directories
+      - type: volume
+        source: isaac-cache-kit
+        target: /isaac-sim/kit/cache
+      - type: volume
+        source: isaac-cache-ov
+        target: /root/.cache/ov
+      - type: volume
+        source: isaac-cache-pip
+        target: /root/.cache/pip
+      - type: volume
+        source: isaac-cache-gl
+        target: /root/.cache/nvidia/GLCache
+      - type: volume
+        source: isaac-cache-compute
+        target: /root/.nv/ComputeCache
+      - type: volume
+        source: isaac-logs
+        target: /root/.nvidia-omniverse/logs
+      - type: volume
+        source: isaac-carb-logs
+        target: /isaac-sim/kit/logs/Kit/Isaac-Sim
+      - type: volume
+        source: isaac-data
+        target: /root/.local/share/ov/data
+      - type: volume
+        source: isaac-docs
+        target: /root/Documents
+    network_mode: host
+    environment: *default-viserdex-environment
+    deploy: *default-viserdex-deploy
+    # This is the entrypoint for the container
+    entrypoint: bash
+    stdin_open: true
+    tty: true
+
+volumes:
+  # isaac-sim
+  isaac-cache-kit:
+  isaac-cache-ov:
+  isaac-cache-pip:
+  isaac-cache-gl:
+  isaac-cache-compute:
+  isaac-logs:
+  isaac-carb-logs:
+  isaac-data:
+  isaac-docs:
+  # viserdex
+  viserdex-logs:
