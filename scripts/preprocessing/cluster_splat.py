@@ -125,7 +125,7 @@ if __name__ == "__main__":
         "scales": (64, False),
         "quats": (128, False),
         "means3d": (128, False),
-        "sh0": (32, False),
+        "sh0": (32, True),
     }
 
     for key, (num_clusters, use_auto) in clusters.items():

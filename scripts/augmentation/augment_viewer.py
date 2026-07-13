@@ -94,7 +94,7 @@ if __name__ == "__main__":
     
     splats_handles = {'base': gs_handle}
     
-    cluster_path = ply_path.parent / 'clusters_auto' / 'indices'
+    cluster_path = ply_path.parent / 'clusters' / 'indices'
     
     
     defaultAugmentations = generate_default_augmentations(cluster_path)
