@@ -145,16 +145,15 @@ instructions on the `preprocessing`/`augmentation` scripts and how to onboard a 
 
 ## ViserDex-Dataset
 
-Meshes, splats, and evaluation datasets are hosted on HuggingFace at `leggedrobotics/ViserDexSplats`.
-Fetch them with:
+Meshes and splats are hosted on HuggingFace at `leggedrobotics/ViserDexSplats`. Fetch them with:
 
 ```bash
 pip install huggingface_hub
 python scripts/download_data.py --repo-id leggedrobotics/ViserDexSplats
 ```
 
-This places meshes/splats under `source/viserdex/viserdex/assets/data/` and the real-world evaluation
-keypoint captures under `data/keypoints/`, matching the paths referenced in `viserdex.assets.objects`.
+This places them under `source/viserdex/viserdex/assets/data/`, matching the paths referenced in
+`viserdex.assets.objects`.
 The data is licensed separately from the code, under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
 (attribution required, non-commercial use only).
 
