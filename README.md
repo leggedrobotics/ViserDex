@@ -113,7 +113,7 @@ the pose estimator has something to roll out against:
    camera to generate its training images.
 
    ```bash
-   python scripts/pose_estimator/train_pose_estimator.py --task Isaac-ViserDex-Repose-Allegro-Estimator-v0 --enable_cameras
+   python scripts/pose_estimator/train_pose_estimator.py --task Isaac-ViserDex-Repose-Allegro-Estimator-v0
    ```
 
 4. **Evaluate** with `scripts/pose_estimator/eval_pose_estimator.py`.
@@ -145,7 +145,7 @@ instructions on the `preprocessing`/`augmentation` scripts and how to onboard a 
 
 ## ViserDex-Dataset
 
-Meshes and splats are hosted on HuggingFace at `leggedrobotics/ViserDexSplats`. Fetch them with:
+Meshes and splats are hosted on HuggingFace at [leggedrobotics/ViserDexSplats](https://huggingface.co/datasets/leggedrobotics/ViserDexSplats). Fetch them with:
 
 ```bash
 pip install huggingface_hub
